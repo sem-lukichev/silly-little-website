@@ -47,13 +47,20 @@
 
         <template id="example_shared">
             {{store.count}}
-            <button class="btn btn-primary" @click="store.increment">increment shared {{desc}}</button>
+            <button class="btn btn-primary" @click="store.increment">increment shared {{store.desc}}</button>
         </template>
 
-        <div v-scope="exampleFunc({count: 20})"></div>
-        <div v-scope="exampleFunc2({count: 20})"></div>
-        <div v-scope="exampleFunc({}), store"></div>
-        <div v-scope="exampleFunc({}), store"></div>
+        <template id="example_shared100">
+            {{store.count}}
+            <button class="btn btn-primary" @click="increment">increment shared {{desc}}</button>
+        </template>
+
+        <!-- if funcs are doing something with const vars, you do not need to pass both in just the func -->
+        <div v-scope="exampleFunc1(1)"></div>
+        <div v-scope="exampleFunc2(2)"></div>
+        <div v-scope="store"></div>
+        <div v-scope="store"></div>
+        <div v-scope="exampleFunc3()"></div>
 
         <!-- Using petite vue through module -->
         <script type="module">
@@ -61,37 +68,48 @@
 
             const store = reactive({
                 $template: "#example_shared",
-                count: 0,
                 desc: "by 10",
+                count: 0,
                 increment(){
                     this.count = this.count + 10
                 }
             })
 
-            function exampleFunc(obj){
+            function exampleFunc1(starting_count){
                 return {
                     $template: "#example",
                     desc: "by 1",
-                    count: obj.count,
+                    count: starting_count,
                     increment(){
                         this.count++
                     }
                 }
             }
 
-            function exampleFunc2(obj){
+            function exampleFunc2(starting_count){
                 return {
                     $template: "#example",
                     desc: "by 2",
-                    count: obj.count,
+                    count: starting_count,
                     increment(){
                         this.count = this.count + 2
                     }
                 }
             }
 
-            // Pass in object to be mounted. This function returns object so just pass it in without calling()
-            createApp({exampleFunc, exampleFunc2, store}).mount()
+            function exampleFunc3(){
+                return {
+                    $template: "#example_shared100",
+                    desc: "by 100",
+                    increment(){
+                        store.count = store.count + 100
+                    }
+                }
+            }
+
+
+            // Pass in objects or constants or anything really to be mounted. This function returns object so just pass it in without calling()
+            createApp({exampleFunc1, exampleFunc2, exampleFunc3, store}).mount()
         </script>
     </body>
 
