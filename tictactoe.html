@@ -10,27 +10,150 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <title>Tic Tac Toe with Petite Vue</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      text-align: center;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 5px;
+      margin: 20px auto;
+      justify-content: center;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border: 1px solid #000;
+      cursor: pointer;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 1.5rem;
+    }
+  </style>
 
 </head>
 
+
 <body>
+
+    
+
+    <div class="container">
+
+        <nav>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Action</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">Tic Tac Toe</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link disabled">Disabled</a>
+                </li>
+            </ul>
+        </nav>
+
+        <h1>Tic Tac Toe</h1>
+
+        <div id="app" v-scope="ticTacToe()">
+          <div class="board">
+            <div v-for="(cell, index) in state.board" :key="index" class="cell" @click="makeMove(index)">
+              {{ cell }}
+            </div>
+          </div>
+          <div v-if="state.winner" class="message">
+            {{ state.winner }} wins!
+          </div>
+          <button class="btn btn-primary" @click="resetGame">Reset</button>
+        </div>
+
+    </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-    <!-- Using petite vue through module -->
-    <script type="module">
-        import {createApp, reactive} from "https://unpkg.com/petite-vue?module";
+ <!-- Using petite vue through module -->
+ <script type="module">
+    import { createApp, reactive } from "https://unpkg.com/petite-vue?module";
 
+    function ticTacToe() {
+      const state = reactive({
+        board: Array(9).fill(null),
+        currentPlayer: 'X',
+        winner: null,
+      });
 
-        // Pass in objects or constants or anything really to be mounted. This function returns object so just pass it in without calling()
-        createApp({}).mount()
-    </script>
+      function makeMove(index) {
+        if (!state.board[index] && !state.winner) {
+          state.board[index] = state.currentPlayer;
+          if (checkWinner()) {
+            state.winner = state.currentPlayer;
+          } else {
+            state.currentPlayer = state.currentPlayer === 'X' ? 'O' : 'X';
+          }
+        }
+      }
 
+      function checkWinner() {
+        const winningCombinations = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+        return winningCombinations.some(combination => {
+          const [a, b, c] = combination;
+          return state.board[a] && state.board[a] === state.board[b] && state.board[a] === state.board[c];
+        });
+      }
 
-    <a href="index.html" class="nav-link">Home</a>
+      function resetGame() {
+        state.board = Array(9).fill(null);
+        state.currentPlayer = 'X';
+        state.winner = null;
+      }
+
+      return {
+        state,
+        makeMove,
+        resetGame
+      };
+    }
+
+    createApp({ticTacToe}).mount('#app');
+  </script>
+
+  
+
 </body>
 
 
