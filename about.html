@@ -70,6 +70,7 @@
         </nav>
         <div class="about-section">
             <h1 class="text-center mb-4">About Me</h1>
+            <hr>
             <div id="about" v-scope="aboutMe()">
                 <div class="row">
                     <div class="col-md-4 text-center">
@@ -83,7 +84,13 @@
                             <div v-for="(skill, index) in skills" :key="index" class="skill">
                               {{ skill }}
                             </div>
-                          </div>
+                        </div>
+                        <h3>Soft Skills</h3>
+                        <div class="skills">
+                            <div v-for="(skill, index) in soft_skills" :key="index" class="skill">
+                              {{ skill }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,12 +102,16 @@
     
         function aboutMe() {
           const state = reactive({
-            name: 'Semyon (Sem) Lukichev',
-            bio: 'Sample Text',
-            profilePic: 'https://via.placeholder.com/200', // Replace with your profile picture URL
-            skills: ['JavaScript', 'Vue.js', 'Bootstrap', 'CSS', 'HTML', 'p5.js', 
+            name: 'Semyon Lukichev',
+            bio: 'Bio goes here',
+            profilePic: 'images/selfie.jpg', // Replace with your profile picture URL
+            skills: ['JavaScript', 'Vue.js', 'Bootstrap', 'CSS', 'HTML', 
                      'Python', 'NumPy', 'Pandas', 'TensorFlow',
-                     'SAS', 'Java']
+                     'SAS', 'Java', 'SQL', 'Git'],
+            soft_skills: ['Verbal and Written Communication', 'Collaboration', 
+                          'Time Management', 'Attention to Detail', 'Problem Solving',
+                          'Critical Thinking']
+
           });
     
           return {
