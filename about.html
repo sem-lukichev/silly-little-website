@@ -19,6 +19,7 @@
                 max-width: 200px;
                 border-radius: 50%;
                 margin-bottom: 20px;
+                transition: transform 0.3s ease;
             }
             .skills {
                 display: flex;
@@ -33,6 +34,13 @@
                 background-color: #007bff;
                 color: white;
                 border-radius: 5px;
+                transition: transform 0.3s ease;
+            }
+            .skill:hover {
+                transform: scale(1.1);
+            }
+            .profile-pic:hover {
+                transform: scale(1.1);
             }
           </style>
         
@@ -103,7 +111,7 @@
         function aboutMe() {
           const state = reactive({
             name: 'Semyon Lukichev',
-            bio: 'Bio goes here',
+            bio: "Hello! I’m an entry-level software engineer passionate about data science, machine learning, and software development. I graduated Magna Cum Laude from American University in Computer Science and am a proud member of Upsilon Pi Epsilon and Phi Beta Kappa honor societies. I’ve worked as a Programmer Analyst at Information Management Services, Inc., writing optimized SAS scripts and SQL queries to support the National Cancer Institute’s research. I’ve also collaborated with NASA climate scientists at American University, developing machine learning models to improve space weather prediction and to withstand adversarial data attacks. I’m skilled in Python, SAS, SQL, TensorFlow, and have a strong grasp over both data analysis and the software development life cycle. I love solving challenging problems and staying updated with the latest industry trends. I'm looking forward to connecting and exploring business opportunities with you. Thanks for stopping by my page!",
             profilePic: 'images/selfie.jpg', // Replace with your profile picture URL
             skills: ['JavaScript', 'Vue.js', 'Bootstrap', 'CSS', 'HTML', 
                      'Python', 'NumPy', 'Pandas', 'TensorFlow',
