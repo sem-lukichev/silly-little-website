@@ -8,16 +8,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <title>My Website</title>
+        
 
         <style>
             .about-section {
-              padding: 60px;
-              background-color: #f9f9f9;
+                padding: 60px;
+                background-color: #f9f9f9;
             }
             .profile-pic {
-              max-width: 200px;
-              border-radius: 50%;
-              margin-bottom: 20px;
+                max-width: 200px;
+                border-radius: 50%;
+                margin-bottom: 20px;
+            }
+            .skills {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                /* border: 2px solid red; */
+                justify-content: flex-start;
+            }
+            .skill {
+                display: inline-flex;
+                padding: 5px 10px;
+                background-color: #007bff;
+                color: white;
+                border-radius: 5px;
             }
           </style>
         
@@ -63,11 +78,12 @@
                     <div class="col-md-8">
                         <h2>{{ name }}</h2>
                         <p>{{ bio }}</p>
-                        <ul class="list-unstyled">
-                            <li v-for="(skill, index) in skills" :key="index" class="mb-2">
-                                <span class="badge badge-primary">{{ skill }}</span>
-                            </li>
-                        </ul>
+                        <h3>Technical Skills</h3>
+                        <div class="skills">
+                            <div v-for="(skill, index) in skills" :key="index" class="skill">
+                              {{ skill }}
+                            </div>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -82,7 +98,9 @@
             name: 'Semyon (Sem) Lukichev',
             bio: 'Sample Text',
             profilePic: 'https://via.placeholder.com/200', // Replace with your profile picture URL
-            skills: ['JavaScript', 'Vue.js', 'Bootstrap', 'CSS', 'HTML']
+            skills: ['JavaScript', 'Vue.js', 'Bootstrap', 'CSS', 'HTML', 'p5.js', 
+                     'Python', 'NumPy', 'Pandas', 'TensorFlow',
+                     'SAS', 'Java']
           });
     
           return {
